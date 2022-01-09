@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {setCurrentUser,setAdmin} from "../redux/user/user.actions"
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,16 +27,16 @@ const useStyles = makeStyles((theme) => ({
  function ButtonAppBar(props) {
   const [state, setstate] = React.useState("")
   const classes = useStyles();
+  const { publicKey, sendTransaction } = useWallet();
 
 
 
-
-
+console.log(props)
   return (
     <div className={classes.root}>
       <div position="static" color="#ff385c" style={{padding: "0 10%"}}>
         <Toolbar>
-        <div className='buttonTax'  >Tax Point : 30</div>
+       {props.cur_user&&<div className='buttonTax'  >Tax Point : {props.cur_user?.user?.tax_point}</div>} 
           <Typography variant="h6" className={classes.title}>
             
           </Typography>
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
         
 
 
-           }}>Disconnect Wallet</div></Link>
+           }}>Disconnect Wallet <span style={{display:"none"}} >{publicKey?.toString()}</span></div></Link>
           }
         </Toolbar>
       </div>

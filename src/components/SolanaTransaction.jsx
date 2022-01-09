@@ -7,25 +7,36 @@ import {
   Connection,
   clusterApiUrl,
 } from "@solana/web3.js";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useState ,useEffect} from "react";
 import { Button } from "@material-ui/core";
+import { setCurrentUser, setAdmin } from "../redux/user/user.actions";
+import { connect } from "react-redux";
+
 const SendOneLamportToRandomAddress = ({
   transaction_id,
   reload,
   amount,
   user_id,
+  user,
+  update_user
 }) => {
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
   const [loading, setLoading] = useState(false);
   const [saved_signature, setSignature] = useState("");
 
+
+useEffect(()=>{
+
+  console.log("public ket in effect",publicKey)
+},[publicKey])
+
+
   const onClick = useCallback(async () => {
     let my_connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
     try {
-      if (!publicKey) throw new WalletNotConnectedError();
-
+      
       setLoading(true);
 
       const transaction = new Transaction().add(
@@ -39,32 +50,39 @@ try {
   const signature = await sendTransaction(transaction, connection);
   console.log("orginal", signature);
   setSignature(signature);
+  const body = {
+    transaction_id,
+  
+    amount,
+    user_id,
+  };
+  const response = await fetch(`http://localhost:5000/user/pay_tax`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  const parseRes = await response.json();
+ let currentUser=user
+ currentUser.user=parseRes.new_user
+ 
+  update_user(currentUser)
 
   await connection.confirmTransaction(signature, "processed");
 
  
 
 } catch (error) {
-  
+  console.log(error)
 }
-const body = {
-  transaction_id,
 
-  amount,
-  user_id,
-};
-      const response = await fetch(`http://localhost:5000/user/pay_tax`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-
-      const parseRes = await response.json();
+     
     } catch (error) {
       console.log(error);
     } finally {
+   
       setLoading(false);
       reload();
     }
@@ -76,20 +94,31 @@ const body = {
         style={{ color: "green" }}
         href={`https://explorer.solana.com/tx/${saved_signature}`}
       >
-        Check confirmation
+        Check confirmation 
       </a>
     );
   else
     return (
       <Button
         onClick={onClick}
-       
+       disabled={!publicKey}
         variant="contained"
         color="secondary"
       >
-        {loading ? "Waiting confirmation" : "pay"}
+       pay {amount}
       </Button>
     );
 };
 
-export default SendOneLamportToRandomAddress;
+
+
+const stateTo = (state) => ({
+  user: state.user?.currentUser,
+  admin: state.user?.admin,
+});
+
+const dispatchto = (dispatch) => ({
+  update_user: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(stateTo, dispatchto)( SendOneLamportToRandomAddress);

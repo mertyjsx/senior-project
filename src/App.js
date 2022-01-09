@@ -47,7 +47,7 @@ function App({ user, admin, del_user }) {
   };
 
   useEffect(() => {
-    console.log("user",user)
+    console.log("user",publicKey)
     if (!(user?.token)) {
       del_user("");
     } else {
@@ -168,6 +168,7 @@ function App({ user, admin, del_user }) {
         draggable
         pauseOnHover
       />
+      
     </Router>
   );
 }

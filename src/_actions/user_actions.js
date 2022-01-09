@@ -8,6 +8,14 @@ export function addUser(id) {
     payload: id,
   };
 }
+
+export function updateUser(user) {
+  console.log("reducera gelen new user",user)
+  return {
+    type: "update_user",
+    payload: user,
+  };
+}
 export function deleteUser(payload) {
   
   return {

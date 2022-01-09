@@ -96,6 +96,8 @@ function StickyHeadTable({ user, history }) {
     },
   ];
 
+
+
   React.useEffect(() => {
     Update();
   }, []);
@@ -155,7 +157,7 @@ function StickyHeadTable({ user, history }) {
             item.amount,
             item.tax_rate,
 
-            item.is_tax_paid ? <div>paid</div> :  <SolanaTransaction transaction_id={item._id} user_id={user.user_id} amount={item.amount} reload={Update}></SolanaTransaction>
+            item.is_tax_paid ? <div>paid</div> :  <SolanaTransaction  transaction_id={item._id} user_id={user.user_id} amount={item.amount*(item.tax_rate/100)} reload={Update}></SolanaTransaction>
           )
         );
       });

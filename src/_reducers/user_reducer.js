@@ -52,7 +52,9 @@ export default function (state = intialState, action) {
     case "add_user":
       return {...state,user:"admin"}
 
-      case "delete_user":
+      case "update_user":
+        return {...state,user:action.payload}
+       case "delete_user":
         return {...state,user:null}
     default:
       return state;
