@@ -19,7 +19,7 @@ const update=async ()=>{
 
     console.log(user)
     let due=await fetch(
-        `http://localhost:5000/dues/${user.user_id}`,
+        `http://localhost:5000/dues/${user?.user_id}`,
         {
           method: "GET",
        
@@ -48,7 +48,7 @@ function getFormattedDate(date) {
 
   return (
     <Grid container column className="ct " justify="center" alignItems="center" >
-     {state.map(due=> 
+     {[1,2,3].map(due=> 
         <div className="shadow-card">
             <h4 style={{position:"absolute",top:30,left:40,color:"#f50057"}}>{getFormattedDate(new Date(due.created_at))}</h4>
 <h1 style={{fontSize:50}}>{due.swimming_pool+due.fitness+due.amount}$</h1>
@@ -70,7 +70,7 @@ function getFormattedDate(date) {
 
 
 const stateto=(state)=>({
-    user:state.user.currentUser.user,
+    user:state.user?.currentUser?.user,
     
     })
 

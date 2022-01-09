@@ -8,11 +8,13 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Admin from "./admin"
-import AddUser from "./addUser"
+
 import AddAdmin from "./newAdmin"
 import CrudAdmin from "./CRUDadmin"
 import Rates from "./rates"
 import Reports from "./Reports"
+import NewTransaction from './newTransaction';
+import NewProject from './newProject';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,32 +81,22 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Users" {...a11yProps(0)} />
-        <Tab label="New User" {...a11yProps(1)} />
-        <Tab label="View Admins" {...a11yProps(2)} />
-        <Tab label="New Admin" {...a11yProps(3)} />
-        <Tab label="Rates" {...a11yProps(4)} />
-        <Tab label="Reports" {...a11yProps(5)} />
+        <Tab label="New Project" {...a11yProps(0)} />
+        <Tab label="Simulate Transaction" {...a11yProps(1)} />
+      
       
       </Tabs>
       <TabPanel  className="w100" value={value} index={0}>
-       <Admin></Admin>
+     <NewProject/>
       </TabPanel>
       <TabPanel className="w100" value={value} index={1}>
-     <AddUser/>
+     <NewTransaction/>
       </TabPanel>
       <TabPanel className="w100" value={value} index={2}>
-        <CrudAdmin></CrudAdmin>
+    
       </TabPanel>
-      <TabPanel className="w100" value={value} index={3}>
-     <AddAdmin/>
-      </TabPanel>
-      <TabPanel className="w100" value={value} index={4}>
-        <Rates></Rates>
-      </TabPanel>
-      <TabPanel className="w100" value={value} index={5}>
-        <Reports></Reports>
-      </TabPanel>
+      
+     
       
     </div>
   );

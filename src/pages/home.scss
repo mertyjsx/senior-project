@@ -1,0 +1,974 @@
+@font-face {
+    font-family: 'SMW';
+    src: url('../fonts/smw.woff2') format('woff2'), url('../fonts/smw.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+
+    font-family: 'Roboto Mono', monospace;
+   
+}
+.title {
+    display: block;
+  
+    color: black;
+    font-size: 4rem;
+    font-weight: 700;
+    word-spacing: -0.1em;
+    letter-spacing: -.05em;
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+   
+}
+:root {
+    --purple: #682AE9;
+    --light: #dbdbdb;
+    --header-link: #dbdbdb;
+    --header-link-hover: #682AE9;
+    --header-link-hover-icon: #dbdbdb;
+    --header-link-active: rgba(85,85,85,1);
+    --std-color: #dbdbdb;
+    --bg: #0e1212;
+    --bg-rgb: 14,18,18;
+    --bgLight: radial-gradient(var(--bg), transparent, var(--purple) 130%);
+    --gray: #808080;
+    --comment: #555;
+}
+.func { color: var(--purple) }
+
+.std {
+    max-width: 42rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--std-color);
+    word-break: break-word;
+    hyphens: none;
+
+    h3 { margin-bottom: 1rem }
+
+    .bt{
+        background: var(--purple);
+        color: var(--bg);
+        padding: 0 1rem;
+        height: 2rem;
+        border-radius: 3rem;
+        line-height: 2rem;
+        text-decoration: none;
+        display: inline-block;
+
+        &:hover {
+            background: var(--light);
+
+            .nav-ico {
+                stroke: var(--gray);
+            }
+        }
+    }
+
+    p {
+        margin-bottom: 1rem;
+        &:last-child { margin-bottom: 0 }
+    }
+    .-big {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        vertical-align: baseline;
+    }
+    .-purple { color: var(--purple) }
+    .-gray { color: var(--gray) }
+    .-comment { color: var(--comment) }
+    .-red { color: #f0514e }
+    .-green { color: #3cb878 }
+    .-full {
+        display: block;
+        margin-right: -25vw;
+        padding-right: 1rem;
+    }
+    i { font-style: italic }
+    b,
+    strong { font-weight: 700 }
+    a {
+        color: var(--light);
+        text-decoration: underline;
+        transition: all 400ms ease-out;
+        &:hover{ color: var(--purple) }
+    }
+
+    .subtitle{
+        color: var(--purple);
+        font-size: 4rem;
+        line-height: 1;
+        margin: 4rem -25vw 2rem 0;
+        padding-right: 1rem;
+        word-spacing: -1rem;
+        word-break: break-word;
+        hyphens: auto;
+
+        s {
+            opacity: .4;
+            font-weight: 400;
+        }
+    }
+
+    ul {
+        margin-bottom: 1rem;
+        &:last-child{ margin-bottom: 0 }
+    }
+    li {
+        list-style-position: outside;
+        margin: 0 0 .5rem 1rem;
+        &:last-child { margin-bottom: 0 }
+    }
+}
+
+// Home sytles
+#home {
+
+    .scene .static-container {
+        padding: 0;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+    }
+
+    /* @scene Intro */
+    #intro {}
+
+    /* @scene CurriculumVitae() */
+    #curriculum{}
+
+    /* @scene biz() */
+    #bizTitle {}
+
+    /* @scene Biz 1, 2, 3 */
+    #biz1 {
+        .static-container {
+            position: relative;
+            z-index: 2;
+        }
+        .container { z-index: unset }
+        svg{ overflow: visible }
+    }
+    #abiz{
+        position: absolute;
+        left: -5vw;
+        top: calc(50% - 15vw);
+        width: 30vw;
+        height: 30vw;
+        z-index: 10;
+        transform: rotateY(180deg);
+    }
+    #zen{
+        position: absolute;
+        left: calc(100% - 30vw);
+        top: 40vh;
+        z-index: 20;
+        width: 60vw;
+        height: 80vh;
+        transform: scale(2);
+    }
+    #et{
+        position: absolute;
+        right: 15vw;
+        top: 30vh;
+        z-index: 18;
+        width: 20vw;
+        height: 40vw;
+    }
+    #dino{
+        position: fixed;
+        right: 0;
+        bottom: -4vh;
+        z-index: 919;
+        width: 50vh;
+        height: 50vh;
+        cursor: pointer;
+
+        .dino-sounds {
+            opacity: 0;
+            stroke-dasharray: 74;
+            stroke-dashoffset: 0;
+            //animation: smoke 1s linear infinite;
+        }
+
+        @keyframes smoke {
+            from{
+                stroke-dasharray: 36;
+                stroke-dashoffset: 72;
+            }
+            to{
+                stroke-dasharray: 36;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        &:hover{
+            transition: filter 200ms ease-out;
+            filter: brightness(1.2);
+
+            .dino-sounds {
+                opacity: 1;
+                animation: smoke 1s linear infinite;
+            }
+        }
+    }
+    #astro{
+        position: absolute;
+        right: 0;
+        bottom: 35vh;
+        width: 20vw;
+        height: 20vw;
+    }
+    #coffee{
+        position: absolute;
+        right: 15vw;
+        top: 35vh;
+        width: 5vw;
+        height: 5vw;
+    }
+    #filomena{
+        position: absolute;
+        right: 40vw;
+        bottom: 5vh;
+        width: 10vw;
+        height: 10vw;
+    }
+    #octo{
+        position: absolute;
+        right: 30vw;
+        top: 60vh;
+        width: 7vw;
+        height: 7vw;
+    }
+    #open{
+        position: absolute;
+        left: -20vw;
+        top: calc(50% - 20vw);
+        z-index: -1;
+        width: 40vw;
+        height: 40vw;
+    }
+    #custom{
+        position: absolute;
+        right: -25vw;
+        bottom: -25vw;
+        z-index: -1;
+        width: 50vw;
+        height: 50vw;
+    }
+    #smart{
+        position: absolute;
+        left: 5vw;
+        bottom: -5vw;
+        z-index: -2;
+        width: 20vw;
+        height: 20vw;
+        filter: brightness(.7);
+    }
+
+
+
+    /* @scene ArtPhiGames() */
+    #ArtPhiGamesTitle {
+        .line { display: block }
+    }
+
+    /* @scene Mario */
+    #Mario{
+        z-index: 999;
+
+        .container {
+            // resize here for easy animation
+            transform: scale(.8);
+            transform-origin: center;
+
+            div { position: absolute }
+        }
+
+        audio { display: none }
+
+    
+
+        .mario-box{
+            cursor: pointer;
+            top: calc(50% - 64px);
+            left: calc(25% - 64px);
+            width: 128px;
+            height: 128px;
+
+            &:before {
+                content: '1';
+                position: absolute;
+                top: calc(100% + 1rem);
+                left: calc(50% - 1rem);
+                font-size: 1rem;
+                text-align: center;
+                line-height: 2rem;
+                color: #ccc;
+                opacity: .5;
+                width: 2rem;
+                height: 2rem;
+                border: 1px solid #666;
+                border-top-color: #aaa;
+                border-bottom-color: #444;
+                border-radius: .25rem;
+                box-shadow: 0 .25rem .25rem rgba(0,0,0,1);
+            }
+
+           
+
+            @keyframes marioBox {
+                from { background-position: 0 0 }
+                to { background-position: -512px 0 }
+            }
+            @keyframes marioBoxEmpty {
+                from { background-position: 0 -128px }
+                to { background-position: -512px -128px }
+            }
+
+            &.-jumped{
+                &:before { display: none }
+                .in { animation: marioBoxEmpty .6s steps(4) infinite }
+            }
+            &.-full.-jumped .in {
+                animation: none;
+                background-position: -512px 0;
+            }
+
+            &.b2 {
+                left: calc(50% - 64px);
+
+                &:before { content: '2' }
+            }
+            &.b3 {
+                left: calc(75% - 64px);
+
+                &:before { content: '3' }
+            }
+
+            &:hover { filter: brightness(1.2) }
+
+            &.-off{
+                cursor: default;
+                &:hover { filter: none }
+            }
+        }
+
+        .mario-coin{
+            left: 0;
+            bottom: 0;
+            width: 128px;
+            height: 128px;
+           
+            animation: marioCoin .6s steps(4) infinite;
+            visibility: hidden;
+
+            @keyframes marioCoin { to { background-position: -512px -256px } }
+        }
+
+        .mario-coin-counter{
+            position: absolute;
+            top: 3rem;
+            left: calc(50% - 3rem);
+            width: 7rem;
+            text-align: center;
+            line-height: 3rem;
+            font-family: 'SMW', monospace;
+            font-size: 2rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+
+            &:before{
+                flex: 0 0 auto;
+                content: '';
+                margin-right: .5rem;
+                width: 2rem;
+                height: 2rem;
+             
+                background-size: 160px 158px;
+            }
+        }
+    }
+    .mario-msg-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+    }
+    .mario-msg{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        z-index: 9999;
+        transform: translate3d(-50%,-50%,0) scale(0);
+        transform-origin: 50% 50%;
+        width: 40rem;
+        height: 30rem;
+        padding: 2rem;
+        max-width: 70vw;
+        max-height: 70vh;
+        background: #000;
+        color: #fff;
+        font-family: 'SMW', monospace;
+        font-size: 2rem;
+        text-align: center;
+        letter-spacing: 2px;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+
+        .-purple { color: var(--purple) }
+
+        .later{
+            color: var(--purple);
+            opacity: 0;
+            padding-top: 2rem;
+            position: static;
+            text-align: center;
+        }
+    }
+    .mario-msg-close {
+        position: absolute;
+        bottom: 100%;
+        right: 0;
+        width: 3rem;
+        height: 3rem;
+        color: #000;
+        font-size: 2rem;
+        background: none;
+    }
+
+    /* @scene Ghibli */
+    #Ghibli{
+
+        .container {
+            div { position: absolute }
+        }
+
+        .sky{
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            .c1{
+                transform-origin: left bottom;
+                bottom: 0;
+                left: 0;
+                width: 45vw;
+                height: 50vh;
+             
+                background-size: contain;
+            }
+
+            .c2{
+                transform-origin: right bottom;
+                bottom: 0;
+                right: 0;
+                width: 60vw;
+                height: 60vh;
+               
+                background-size: contain;
+            }
+        }
+
+        .grass1{
+            transform-origin: left bottom;
+            bottom: 0;
+            left: 0;
+            width: 50vw;
+            height: 25vh;
+  
+            background-size: contain;
+            filter: blur(2px);
+        }
+     
+        .castle-container{
+            top: 70%;
+            left: 100%;
+            z-index: 0;
+            width: 733px;
+            height: 824px;
+            transform: scale(.75);
+            transform-origin: 0 0;
+        }
+        .castle {
+            width: 100%;
+            height: 100%;
+
+            .top {
+                top: 58px;
+                left: 44px;
+                width: 596px;
+                height: 420px;
+            }
+          
+         
+          
+            
+            .r-arm-holder {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+               
+            }
+
+            .ear {
+                top: 523px;
+                left: 205px;
+                width: 70px;
+                height: 53px;
+              
+            }
+            .lower-foliage {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                .foliage2 {
+                    top: 360px;
+                    left: 244px;
+                    width: 121px; height: 99px;
+                  
+                    background-size: 865px 713px;
+                }
+                .foliage1 {
+                    top: 417px;
+                    left: 307px;
+                    width: 110px; height: 62px;
+                    
+                    background-size: 865px 713px;
+                }
+                .fix-balcony {
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                   
+                    background-size: 100% 100%;
+                }
+            }
+
+            .wing {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+             
+                background-size: 4398px 824px;
+                animation: wing .4s steps(6) infinite alternate;
+
+                @keyframes wing {
+                    to {
+                        background-position: -4398px 0;
+                    }
+                }
+            }
+            .higher-foliage {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                .foliage3 {
+                    top: 183px;
+                    left: 290px;
+                    width: 138px; height: 140px;
+              
+                    background-size: 865px 713px;
+                }
+                .foliage2 {
+                    top: 239px;
+                    left: 357px;
+                    width: 211px; height: 119px;
+                   
+                    background-size: 865px 713px;
+                }
+                .foliage1 {
+                    top: 320px;
+                    left: 438px;
+                    width: 89px; height: 62px;
+                  
+                    background-size: 865px 713px;
+                }
+                .fix-roof {
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                  
+                    background-size: 100% 100%;
+                }
+            }
+
+            .flag {
+                top: 323px;
+                left: 429px;
+                width: 53px; height: 30px;
+               
+
+                animation: flag .2s steps(2) infinite;
+
+                @keyframes flag {
+                    to {
+                        background-position: -106px 0;
+                    }
+                }
+            }
+        }
+    }
+
+    /*@scene Wrapper*/
+    #wrapperTitle{
+
+        .title{ color: var(--purple) }
+        .std { font-size: 1rem }
+        .-answer{ opacity: .6 }
+
+    }
+
+    /*@scene Thanks*/
+    #thanks{
+        position: relative;
+
+     
+        #potion{
+            width: 6rem;
+            height: 6rem;
+        }
+
+        .madeof{
+            margin-bottom: 20vh;
+        }
+
+        .-big{
+            a:hover{ filter: brightness(1.4) }
+        }
+
+        .cols{
+            display: grid;
+            grid-template: 1fr / repeat(auto-fit, minmax(150px,auto));
+            grid-gap: 2rem;
+            color: var(--purple);
+            font-size: 1rem;
+
+            li.ico{
+                min-height: 0;
+                margin-bottom: 2rem;
+            }
+
+            svg{
+                width: 1rem;
+                height: 1rem;
+                fill: var(--purple)
+            }
+        }
+
+        a{
+            text-decoration: none;
+            display: block;
+            min-height: 2rem;
+        }
+        ul,
+        li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            line-height: 1.5em;
+        }
+
+        .songs{
+            li{
+                float: left;
+                clear: left;
+                transition: all 300ms ease-out;
+                cursor: pointer;
+
+                &.ico{ display: block }
+
+                a{ color: var(--purple) }
+                a:hover{
+                    color: var(--light);
+                }
+            }
+        }
+
+    }
+
+    // standard text
+    .std {
+        font-size: 1.2rem;
+
+        .-big{
+            display: block;
+            font-size: 4rem;
+            font-weight: 700;
+            word-spacing: -.1em;
+            letter-spacing: -.05em;
+            width: 70vw;
+        }
+    }
+
+}
+
+//stop scrolling
+body.-mario-lock {
+    overflow: hidden;
+
+    #header,
+    .wrapper:after,
+    .spine,
+    .spine-target {
+        transition: opacity 200ms ease-out;
+        opacity: 0 !important;
+        //visibility: hidden;
+    }
+
+    &:before{
+        content: '?';
+        font-family: 'SMW', monospace;
+        font-size: 4rem;
+        color: #fff;
+        position: fixed;
+        top: 8rem;
+        left: calc(50% - 2.5rem);
+        width: 5rem;
+        text-align: center;
+    }
+}
+
+// Mario easter-egg
+body.-mario-easter-egg {
+    overflow: hidden;
+
+    #home { z-index: 999 }
+}
+body.-bit16 {
+    //font-family: 'SMW', monospace;
+}
+
+/* Responsive */
+@media screen and (max-width: 1024px) {
+
+
+
+    #home {
+
+        /* @element .spine */
+        .spine { left: 1rem }
+        .spine-target{ left: calc(1rem - 4px) }
+
+        /* @scene Biz 1, 2, 3 */
+        #abiz{
+            top: auto;
+            bottom: 0;
+        }
+        #dino{
+            right: -5vw;
+            bottom: -20vh;
+            width: 70vh;
+            height: 70vh;
+        }
+        #open{
+            top: auto;
+            bottom: -10vw;
+        }
+        #smart{ left: 10vw }
+
+        /* @scene Mario */
+        #Mario{
+            .container {
+                transform: scale(1);
+            }
+
+            .mario{
+                transform-origin: 50% 0;
+                transform: scale(.8);
+            }
+
+            .mario-box{
+                transform-origin: 50% 100%;
+                transform: scale(.8);
+                .in {
+                    position: relative;
+                }
+            }
+
+            .mario-coin-counter{
+                top: 6rem;
+                font-size: 1.5rem;
+
+                &:before{
+                    transform: scale(.8);
+                }
+            }
+        }
+
+        // standard text
+        .std {
+            .-big{
+                font-size: 3.5rem;
+                width: 90vw;
+            }
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+
+    #home {
+
+        /* @scene Biz 1, 2, 3 */
+        #abiz{
+            width: 50vw;
+            height: 50vh;
+        }
+        #zen{
+            top: 65vh;
+            width: 50vw;
+            height: 60vh;
+        }
+        #dino{
+            width: 60vh;
+            height: 60vh;
+        }
+        #open{
+            width: 60vw;
+            height: 60vh;
+        }
+        #smart{
+            width: 30vw;
+            height: 30vw;
+            left: 20vw
+        }
+
+        /* @scene Mario */
+        #Mario{
+            .mario-box{
+                &:before { display: none }
+            }
+        }
+
+        /* @scene Ghibli */
+        #Ghibli{
+
+            .sky{
+                .c1,
+                .c2{
+                    width: 100vw;
+                    height: 90vh;
+                    background-size: 100% auto;
+                }
+            }
+
+        }
+
+        /*@scene Thanks*/
+        #thanks{
+            li {
+                margin-bottom: .5rem;
+            }
+        }
+
+        // standard text
+        .std {
+            .-big{
+                width: 100%;
+            }
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 568px) {
+
+    #home {
+
+        /* @scene Biz 1, 2, 3 */
+        #astro{
+            right: 0;
+            bottom: 55vh;
+            width: 20vh;
+            height: 20vh;
+        }
+        #coffee{
+            right: 15vh;
+            top: 20vh;
+            width: 5vh;
+            height: 5vh;
+        }
+
+        /* @scene EarlyDays() */
+        #earlyTitle {
+            .pepe {
+                transform: scale(.2) translate3d(0,-50%,0);
+            }
+            .pepe-scenery {
+                z-index: -1;
+
+                .sky{
+                    height: calc(100vh - 52px);
+                }
+                .ocean{
+                    height: 52px;
+                }
+            }
+        }
+
+        /* @scene ArtPhiGames() */
+        #ArtPhiGamesTitle {
+            .title {
+                white-space: nowrap;
+            }
+        }
+
+        /* @scene Mario */
+        #Mario{
+
+            .mario{ transform: scale(.5) }
+            .mario-box{ transform: scale(.5) }
+
+        }
+        .mario-msg{
+            padding: 1rem;
+            max-width: 80vw;
+            font-size: 1.2rem;
+
+            .later{
+                padding-top: 1rem;
+            }
+        }
+
+        /* @scene Ghibli */
+        #Ghibli{
+
+            .castle-container{
+                transform: scale(.3);
+            }
+        }
+
+        // title
+        .title { white-space: nowrap }
+
+        // standard text
+        .std {
+            font-size: 1rem;
+            .-big{ font-size: 2rem }
+        }
+
+    }
+
+}

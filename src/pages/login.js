@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useMemo} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,25 +15,65 @@ import Container from "@material-ui/core/Container";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import {
+  WalletModalProvider,
+  WalletDisconnectButton,
+  WalletMultiButton
+} from '@solana/wallet-adapter-react-ui';
+import {
+  LedgerWalletAdapter,
+  PhantomWalletAdapter,
+  SlopeWalletAdapter,
+  SolflareWalletAdapter,
+  SolletExtensionWalletAdapter,
+  SolletWalletAdapter,
+  TorusWalletAdapter,
+} from '@solana/wallet-adapter-wallets';
 import {connect} from "react-redux"
 import {setCurrentUser} from "../redux/user/user.actions"
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 function SignIn(props) {
   const classes = useStyles();
-  const [data, setdata] = React.useState({ email: "", password: "" });
+  const [data, setdata] = React.useState({ id_number: "", password: "" });
+  const { connection } = useConnection();
+  const { publicKey, sendTransaction } = useWallet();
+ console.log("login public",publicKey)
 
- console.log(process.env.dom)
+
+
+
 
 
   const handleSubmit = async () => {
-    if (data.email && data.password) {
+
+    if (!publicKey){
+      console.log("connect your wallet")
+    };
+
+
+    if (publicKey) {
    
-     
+      const message = `Sign your auth , this message will be signed with your private key`;
+  const encodedMessage = new TextEncoder().encode(message);
+  const signedMessage = await window.solana.signMessage(encodedMessage, "utf8");
+  var u8 = new Uint8Array(signedMessage.signature);
+  var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(u8)));
+var signed = new TextDecoder().decode(signedMessage.signature);
+console.log(signed)
+const authData={
+  signature:base64String ,
+  public_key:publicKey._bn
+}
+
+
+
+console.log("signedMessage",signedMessage)
       try {
-        const body = { user_email:data.email, user_password:data.password };
+        const body = authData;
         const response = await fetch(
-          `http://localhost:5000/authentication/login`,
+          `http://localhost:5000/auth/login`,
           {
             method: "POST",
             headers: {
@@ -44,28 +84,28 @@ function SignIn(props) {
         );
   
         const parseRes = await response.json();
-  console.log(parseRes)
+
   
         if (parseRes.status) {
         //  localStorage.setItem("token", parseRes.jwtToken);
         props.adduser(parseRes)
           toast.success("Logged in Successfully");
-          props.history.push("/announce")
+          props.history.push("/my-transactions")
         } else {
       
-          toast.error(parseRes);
+          toast.error("Connect your wallet before sign");
         }
       } catch (err) {
         console.error(err.message);
       }
     }else{
 
-      if(data.email){
+      if(data.id_number){
 
         toast.error("enter password")
       }else{
 
-        toast.error("enter email")
+        toast.error("enter id_number")
       }
 
 
@@ -92,35 +132,7 @@ function SignIn(props) {
           User Login
         </Typography>
         <div className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            onChange={(e) => {
-              handleChange("email", e.target.value);
-            }}
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            onChange={(e) => {
-              handleChange("password", e.target.value);
-            }}
-            id="password"
-            autoComplete="current-password"
-          />
-
+      {publicKey?<WalletDisconnectButton/>:  <WalletMultiButton />}
           <Button
             onClick={handleSubmit}
             fullWidth
@@ -128,19 +140,11 @@ function SignIn(props) {
             color="primary"
             className={classes.submit}
           >
-            login 
+          Sign your Auth
           </Button>
-          <Grid container>
-            <Grid item xs>
-              
-            </Grid>
-            <Grid item>
-              <Link to="register" variant="body2" style={{color:"#f50057",fontSize:18,marginTop:20}}>
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-           
+        
+                  
+      
            
         </div>
       </div>

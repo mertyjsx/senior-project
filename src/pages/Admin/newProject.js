@@ -89,15 +89,13 @@ const useStyles = makeStyles((theme) => ({
 function AddUser({ cancel, updatePage, create, history, cur_user, add_user ,admin}) {
   const classes = useStyles();
   const [data, set_data] = React.useState({
-    phone_number: "",
-    user_name: "",
-    user_password: "",
-    flat_no: "",
-    user_email: "",
-    is_active: true,
-    swimming_pool: false,
-    fitness: false,
-    flat_status: "Owner",
+    image_url: "",
+    name: "",
+    desc: "",
+    
+    pool_limit: "",
+  
+  
   });
 
   const [error, seterror] = React.useState("");
@@ -108,55 +106,31 @@ function AddUser({ cancel, updatePage, create, history, cur_user, add_user ,admi
     if (cur_user) {
       history.push("/login");
     }
-    getFlats()
+ 
   }, []);
 
 
 
- const getFlats=async ()=>{
 
-  const res = await fetch(`http://localhost:5000/admin/flats`, {
-    method: "GET",
-    headers: { jwt_token: admin.token },
-  });
-const flats=await res.json()
-console.log("flats",flats)
-setflats(flats)
- }
 
-const findFlats=(flat_)=>{
-  console.log(flatss)
-  console.log(flatss.find(flat=>flat.flat_no===flat_))
-  return flatss.find(flat=>{
- console.log(flat.flat_no) 
-    return  flat.flat_no===flat_
-  })
-}
+
 
 
   const check = () => {
     var phoneno = /^\d{10}$/;
-    if (!data.phone_number) {
-      return "phone number  cannot be empty";
+    if (!data.image_url) {
+      return "image_url cannot be empty";
     }
 
-    if (!data.phone_number.match(phoneno)) {
-      return "phone number format is not correct";
+   
+
+    if (!data.name) {
+      return "id cannot be empty";
+    }
+    if (!data.pool_limit) {
+      return "pool_limit cannot be empty";
     }
 
-    if (!data.user_name) {
-      return "name cannot be empty";
-    }
-    if (!data.user_email) {
-      return "email cannot be empty";
-    }
-
-    if (!data.flat_no) {
-      return "flat_no cannot be empty";
-    }
-    if (!data.user_password) {
-      return "password cannot be empty";
-    }
 
     return false;
   };
@@ -167,7 +141,7 @@ const findFlats=(flat_)=>{
       try {
         const body = data;
         const response = await fetch(
-          `http://localhost:5000/authentication/register`,
+          `http://localhost:5000/admin/create-project`,
           {
             method: "POST",
             headers: {
@@ -180,16 +154,14 @@ const findFlats=(flat_)=>{
         console.log(parseRes);
 
         if (parseRes.status) {
-          console.log(parseRes);
+       
 
-          add_user(parseRes);
-
-          toast.success("User added Successfully");
+          toast.success("Project added Successfully");
         } else {
           toast.error(parseRes);
         }
       } catch (err) {
-        toast.error("enter different phone number");
+        toast.error("Error");
       }
     } else {
       toast.error(check());
@@ -203,16 +175,16 @@ const findFlats=(flat_)=>{
   return (
     <Grid container justify="center">
       <div className="form-responsive" noValidate>
-        <h1>New User</h1>
+        <h1>New Project</h1>
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
-          id="phone_number"
-          label="phone_number "
-          name="phone_number"
-          autoComplete="phone_number"
+          id="image_url"
+          label="Project image "
+          name="image_url"
+          autoComplete="image_url"
           autoFocus
           onChange={(e) => onChange(e.target.name, e.target.value)}
         />
@@ -223,8 +195,8 @@ const findFlats=(flat_)=>{
             margin="normal"
             required
             style={{ width: "46%" }}
-            name="user_name"
-            label="name"
+            name="name"
+            label="Project Name"
             type="name"
             id="name"
             autoComplete="name"
@@ -235,10 +207,10 @@ const findFlats=(flat_)=>{
             margin="normal"
             required
             style={{ width: "45%" }}
-            name="user_email"
-            label="email"
-            type="email"
-            id="email"
+            name="pool_limit"
+            label="Pool limit"
+            type="number"
+            id="pool_limit"
             onChange={(e) => onChange(e.target.name, e.target.value)}
           />
         </Grid>
@@ -248,84 +220,19 @@ const findFlats=(flat_)=>{
           margin="normal"
           required
           fullWidth
-          type="password"
-          id="user_password"
-          label="user_password "
-          name="user_password"
-          autoComplete="user_password"
+          
+          id="desc"
+          label="Project description "
+          name="desc"
+          autoComplete="desc"
           autoFocus
           onChange={(e) => onChange(e.target.name, e.target.value)}
         />
+ 
 
-        <FormControl
-          variant="filled"
-          style={{ width: "100%", marginTop: 20, marginBottom: 10 }}
-        >
-          <InputLabel id="demo-simple-select-filled-label">Flat</InputLabel>
-          <Select
-            labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
-            onChange={(e) => {
-              onChange("flat_no", e.target.value);
-            }}
-          >
-           {!findFlats("A-1")&&<MenuItem value={"A-1"}>A-1</MenuItem>} 
-           {!findFlats("A-2")&&<MenuItem value={"A-2"}>A-2</MenuItem>} 
-           {!findFlats("B-1")&&<MenuItem value={"B-1"}>B-1</MenuItem>} 
-           {!findFlats("B-2")&&<MenuItem value={"B-2"}>B-2</MenuItem>} 
-           {!findFlats("C-1")&&<MenuItem value={"C-1"}>C-1</MenuItem>} 
-           {!findFlats("C-2")&&<MenuItem value={"C-2"}>C-2</MenuItem>} 
+       
 
-          </Select>
-        </FormControl>
-
-        <RadioGroup
-          aria-label="gender"
-          name="flat_status"
-          value={data.flat_status}
-          onChange={(e) => {
-            onChange("flat_status", e.target.value);
-          }}
-        >
-          <Grid container row justify="space-evenly">
-            <h4>Flat Status</h4>
-            <FormControlLabel value="Owner" control={<Radio />} label="Owner" />
-            <FormControlLabel
-              value="Tenant"
-              control={<Radio />}
-              label="Tenant"
-            />
-          </Grid>
-        </RadioGroup>
-
-        <Grid container row justify="space-evenly">
-          <h4>Exstra Services</h4>
-
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={data.fitness}
-                onChange={(e) => {
-                  onChange("fitness", e.target.checked);
-                }}
-                inputProps={{ "aria-label": "primary checkbox" }}
-              />
-            }
-            label="Fitness service"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={data.swimming_pool}
-                onChange={(e) => {
-                  onChange("swimming_pool", e.target.checked);
-                }}
-                inputProps={{ "aria-label": "primary checkbox" }}
-              />
-            }
-            label="Swimming pool"
-          />
-        </Grid>
+       
 
         <Button
           type="submit"
@@ -336,7 +243,7 @@ const findFlats=(flat_)=>{
           className={classes.submit}
           onClick={Submit}
         >
-          Add User
+       Add Project
         </Button>
       </div>
     </Grid>

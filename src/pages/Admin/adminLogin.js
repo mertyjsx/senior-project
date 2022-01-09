@@ -21,19 +21,19 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function SignIn(props) {
   const classes = useStyles();
-  const [data, setdata] = React.useState({ email: "", password: "" });
+  const [data, setdata] = React.useState({ id: "", password: "" });
 
  
 
 
   const handleSubmit = async () => {
-    if (data.email && data.password) {
+    if (data.id && data.password) {
    
    
       try {
-        const body = { admin_email:data.email, admin_password:data.password };
+        const body = { admin_id:data.id, password:data.password };
         const response = await fetch(
-          "http://localhost:5000/authentication/admin-login",
+          "http://localhost:5000/admin/login",
           {
             method: "POST",
             headers: {
@@ -60,12 +60,12 @@ function SignIn(props) {
       }
     }else{
 
-      if(data.email){
+      if(data.id){
 
         toast.error("enter password")
       }else{
 
-        toast.error("enter email")
+        toast.error("enter id")
       }
 
 
@@ -99,13 +99,13 @@ function SignIn(props) {
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="id"
             onChange={(e) => {
-              handleChange("email", e.target.value);
+              handleChange("id", e.target.value);
             }}
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            label="id Address"
+            name="id"
+            autoComplete="id"
             autoFocus
           />
           <TextField

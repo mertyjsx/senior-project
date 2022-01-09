@@ -1,11 +1,10 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
@@ -29,37 +28,40 @@ const useStyles = makeStyles((theme) => ({
   const classes = useStyles();
 
 
-console.log(props.history)
+
 
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="#ff385c" style={{padding: "0 10%"}}>
+      <div position="static" color="#ff385c" style={{padding: "0 10%"}}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
+        <div className='buttonTax'  >Tax Point : 30</div>
           <Typography variant="h6" className={classes.title}>
             
           </Typography>
-          {props.cur_user&&<Link to="/mydues">
-          <Button color="secondary" variant="contained" style={{marginRight:30}} >my dues</Button>
+          {props.cur_user&&<Link to="/projects">
+          <div className='buttonApp' color="inherit" >Projects</div>
+          </Link>
+         
+          }
+           {props.cur_user&&<Link to="/my-transactions">
+          <div className='buttonApp' color="inherit" >Transactions</div>
           </Link>
          
           }
         {!props.cur_user?<Link to="/login">
-          <Button color="inherit" >User Login</Button>
+          <div className='buttonApp' color="inherit" >User Login</div>
           </Link>:
           <Link to="login">
-           <Button color="inherit" onClick={()=>{
+           <div  className='buttonApp' onClick={()=>{
            props.del_user(null)
         
 
 
-           }}> Logout</Button></Link>
+           }}>Disconnect Wallet</div></Link>
           }
         </Toolbar>
-      </AppBar>
+      </div>
     </div>
   );
 }
